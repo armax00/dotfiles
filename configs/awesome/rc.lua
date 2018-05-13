@@ -2,9 +2,54 @@
 local gears = require("gears")
 local awful = require("awful")
 require("awful.autofocus")
+-- Theme handling library
+local beautiful = require("beautiful")
 -- Widget and layout library
 local wibox = require("wibox")
--- Battery Widget
+local vicious = require("vicious")
+---- 
+-- Custom widgets
+-- CPU
+local cpu_graph_widget = wibox.widget {
+	width = 60,
+	color = gears.color('#C2EAFE'),
+    background_color = gears.color.transparent,
+	step_width = 2,
+	step_spacing = 1,
+	widget = wibox.widget.graph,
+}
+local cpu_text_widget = wibox.widget {
+    forced_width = 35,
+    align = "right",
+    widget = wibox.widget.textbox,
+}
+vicious.register(cpu_graph_widget, vicious.widgets.cpu, '$1', 1)
+vicious.register(
+        cpu_text_widget,
+        vicious.widgets.cpu,
+        '<span color="#C2EAFE">$1%</span>',
+        3)
+
+-- RAM
+local mem_text_widget = wibox.widget {
+    align = right,
+    widget = wibox.widget.textbox,
+}
+local mem_text_fmt = 'MEM: <span color="#C2EAFE">$1%</span> '
+    .. 'SWAP: <span color="#C2EAFE">$5%</span>'
+vicious.register(mem_text_widget, vicious.widgets.mem, mem_text_fmt, 3)
+
+-- WiFi
+local wifi_widget = wibox.widget {
+    align = right,
+    widget = wibox.widget.textbox,
+}
+local wifi_text_fmt = '<span color="#C2EAFE">${ssid}</span>@'
+    .. '<span color="#C2EAFE">${linp}%</span>'
+vicious.register(wifi_widget, vicious.widgets.wifi, wifi_text_fmt, 15, "wlp3s0")
+
+-- Imported
+-- Battery
 local battery_widget = require("battery-widget") {
     limits = {
         { 15, "red" },
@@ -12,32 +57,8 @@ local battery_widget = require("battery-widget") {
         { 100, "green" },
     }
 }
--- CPU and RAM Widgets
-local ram_widget = require("awesome-wm-widgets.ram-widget.ram-widget")
 
-local vicious = require("vicious")
-batwidget = wibox.widget.textbox()
-vicious.register(batwidget, vicious.widgets.bat, ' bat: $1 $2%', 61, 'BAT0')
 
--- wifi widget
-local wifiwidget = wibox.widget.textbox()
-vicious.register(wifiwidget, vicious.widgets.wifi, ' <span color="#7F9F7F">${ssid}</span>@<span color="#7F9F7F">${linp}%</span> ', 15, "wlp3s0")
-
-local cpuwidget = wibox.widget {
-	width = 80,
-	color = gears.color('#C2EAFE'),
-    background_color = gears.color.transparent,
-	step_width = 2,
-	step_spacing = 1,
-	widget = wibox.widget.graph,
-}
-vicious.register(cpuwidget, vicious.widgets.cpu, '$1', 1)
-
--- network widget
-netwidget = wibox.widget.textbox()
-
--- Theme handling library
-local beautiful = require("beautiful")
 -- Notification library
 local naughty = require("naughty")
 local menubar = require("menubar")
@@ -229,7 +250,7 @@ end
 screen.connect_signal("property::geometry", set_wallpaper)
 
 separator = wibox.widget {
-    markup = "<span color='#C2EAFE'>  |  </span>",
+    markup = "<span color='#C2EAFE'> <b>|</b> </span>",
     widget = wibox.widget.textbox,
 }
 
@@ -272,20 +293,15 @@ awful.screen.connect_for_each_screen(function(s)
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
             separator,
-			cpuwidget2,
+			wifi_widget,
             separator,
-			wifiwidget,
+            cpu_graph_widget,
+            cpu_text_widget,
             separator,
-            batwidget,
-            separator,
-            separator,
-            cpuwidget,
-            separator,
-            ram_widget,
+            mem_chart_widget,
+            mem_text_widget,
             separator,
             battery_widget,
-            separator,
-            mykeyboardlayout,
             separator,
             wibox.widget.systray(),
             mytextclock,
