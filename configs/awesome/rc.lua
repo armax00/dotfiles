@@ -101,9 +101,13 @@ end
 beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
-terminal = "x-terminal-emulator"
-editor = os.getenv("EDITOR") or "editor"
-editor_cmd = terminal .. " -e " .. editor
+terminal 	= "terminator"
+editor 		= os.getenv("EDITOR") or "vim"
+editor_cmd 	= terminal .. " -e " .. editor
+screen_lock = "xlock -mode pacman -count 8"
+suspend_cmd	= "systemctl suspend"
+backlight_increase = "xbacklight -inc 5"
+backlight_decrease = "xbacklight -dec 5"
 
 -- Default modkey.
 -- Usually, Mod4 is the key with a logo between Control and Alt.
@@ -114,7 +118,6 @@ modkey = "Mod4"
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
-    awful.layout.suit.floating,
     awful.layout.suit.tile,
     awful.layout.suit.tile.left,
     awful.layout.suit.tile.bottom,
@@ -125,8 +128,9 @@ awful.layout.layouts = {
     awful.layout.suit.spiral.dwindle,
     awful.layout.suit.max,
     awful.layout.suit.max.fullscreen,
-    awful.layout.suit.magnifier,
-    awful.layout.suit.corner.nw,
+    -- awful.layout.suit.floating,
+    -- awful.layout.suit.magnifier,
+    --awful.layout.suit.corner.nw,
     -- awful.layout.suit.corner.ne,
     -- awful.layout.suit.corner.sw,
     -- awful.layout.suit.corner.se,
@@ -259,7 +263,7 @@ awful.screen.connect_for_each_screen(function(s)
     set_wallpaper(s)
 
     -- Each screen has its own tag table.
-    awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
+    awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" }, s, awful.layout.layouts[1])
 
     -- Create a promptbox for each screen
     s.mypromptbox = awful.widget.prompt()
@@ -467,7 +471,7 @@ clientkeys = gears.table.join(
 -- Bind all key numbers to tags.
 -- Be careful: we use keycodes to make it work on any keyboard layout.
 -- This should map on the top row of your keyboard, usually 1 to 9.
-for i = 1, 9 do
+for i = 1, 10 do
     globalkeys = gears.table.join(globalkeys,
         -- View tag only.
         awful.key({ modkey }, "#" .. i + 9,

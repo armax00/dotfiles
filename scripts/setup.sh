@@ -22,3 +22,6 @@ mkdir -p ~/.config/awesome
 git clone https://github.com/deficient/battery-widget.git \
     ~/.config/awesome/battery-widget
 cp "${DOTFILES_PATH}/configs/awesome/rc.lua" ~/.config/awesome/
+
+# Remove PC speakers beep from the system.
+sudo bash -c "echo 'blacklist pcspkr' > /etc/modprobe.d/nobeep.conf"
