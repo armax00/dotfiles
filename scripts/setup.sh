@@ -25,3 +25,7 @@ cp "${DOTFILES_PATH}/configs/awesome/rc.lua" ~/.config/awesome/
 
 # Remove PC speakers beep from the system.
 sudo bash -c "echo 'blacklist pcspkr' > /etc/modprobe.d/nobeep.conf"
+
+# Add the startup script for X related services.
+sudo cp "${DOTFILES_PATH}"/scripts/ldm_session_setup.sh \
+    /etc/lightdm/pre-login.d/ldm_session_setup
