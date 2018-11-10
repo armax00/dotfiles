@@ -1,4 +1,5 @@
 -- Standard awesome library
+local os = require("os")
 local gears = require("gears")
 local awful = require("awful")
 require("awful.autofocus")
@@ -98,13 +99,14 @@ end
 
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
-beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
+local home_dir = os.getenv("HOME")
+beautiful.init(home_dir .. "/.config/awesome/themes/default/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
 terminal 	= "terminator"
 editor 		= os.getenv("EDITOR") or "vim"
 editor_cmd 	= terminal .. " -e " .. editor
-screen_lock = "xlock -mode pacman -count 8"
+screen_lock = "xscreensaver-command -l"
 suspend_cmd	= "systemctl suspend"
 backlight_increase = "xbacklight -inc 5"
 backlight_decrease = "xbacklight -dec 5"
@@ -325,8 +327,18 @@ root.buttons(gears.table.join(
 
 -- {{{ Key bindings
 globalkeys = gears.table.join(
-    awful.key({ modkey,           }, "s",      hotkeys_popup.show_help,
-              {description="show help", group="awesome"}),
+    --- Lock the screen without suspending the device.
+    awful.key({ modkey,           }, "s",
+              function() awful.util.spawn(screen_lock) end,
+              {description="lock screen", group="awesome"}),
+    --- Lock the screen and suspend the device.
+    awful.key({ modkey, "Shift" }, "s",
+              function()
+                awful.util.spawn(
+                    "/bin/bash -c '" .. screen_lock .. " && sleep 3 && " ..
+                    suspend_cmd .. "'")
+              end,
+              {description="lock screen and suspend", group="awesome"}),
     awful.key({ modkey,           }, "Left",   awful.tag.viewprev,
               {description = "view previous", group = "tag"}),
     awful.key({ modkey,           }, "Right",  awful.tag.viewnext,
@@ -354,10 +366,12 @@ globalkeys = gears.table.join(
               {description = "swap with next client by index", group = "client"}),
     awful.key({ modkey, "Shift"   }, "k", function () awful.client.swap.byidx( -1)    end,
               {description = "swap with previous client by index", group = "client"}),
-    awful.key({ modkey, "Control" }, "j", function () awful.screen.focus_relative( 1) end,
+
+    awful.key({ modkey, "Control" }, "h", function () awful.screen.focus_relative( 1) end,
               {description = "focus the next screen", group = "screen"}),
-    awful.key({ modkey, "Control" }, "k", function () awful.screen.focus_relative(-1) end,
+    awful.key({ modkey, "Control" }, "l", function () awful.screen.focus_relative(-1) end,
               {description = "focus the previous screen", group = "screen"}),
+
     awful.key({ modkey,           }, "u", awful.client.urgent.jumpto,
               {description = "jump to urgent client", group = "client"}),
     awful.key({ modkey,           }, "Tab",
@@ -385,10 +399,11 @@ globalkeys = gears.table.join(
               {description = "increase the number of master clients", group = "layout"}),
     awful.key({ modkey, "Shift"   }, "l",     function () awful.tag.incnmaster(-1, nil, true) end,
               {description = "decrease the number of master clients", group = "layout"}),
-    awful.key({ modkey, "Control" }, "h",     function () awful.tag.incncol( 1, nil, true)    end,
+    awful.key({ modkey, "Control" }, "j",     function () awful.tag.incncol( 1, nil, true)    end,
               {description = "increase the number of columns", group = "layout"}),
-    awful.key({ modkey, "Control" }, "l",     function () awful.tag.incncol(-1, nil, true)    end,
+    awful.key({ modkey, "Control" }, "k",     function () awful.tag.incncol(-1, nil, true)    end,
               {description = "decrease the number of columns", group = "layout"}),
+
     awful.key({ modkey,           }, "space", function () awful.layout.inc( 1)                end,
               {description = "select next", group = "layout"}),
     awful.key({ modkey, "Shift"   }, "space", function () awful.layout.inc(-1)                end,
@@ -421,7 +436,26 @@ globalkeys = gears.table.join(
               {description = "lua execute prompt", group = "awesome"}),
     -- Menubar
     awful.key({ modkey }, "p", function() menubar.show() end,
-              {description = "show the menubar", group = "launcher"})
+              {description = "show the menubar", group = "launcher"}),
+    -- Multimedia controllers.
+    awful.key({}, "XF86AudioMute",
+              function() awful.util.spawn(toggle_speaker) end,
+              {description = "", group="awesome"}),
+    awful.key({}, "XF86AudioLowerVolume",
+              function() awful.util.spawn(vol_down) end,
+              {description = "", group="awesome"}),
+    awful.key({}, "XF86AudioRaiseVolume",
+              function() awful.util.spawn(vol_up) end,
+              {description = "", group="awesome"}),
+    awful.key({}, "XF86AudioMicMute",
+              function() awful.util.spawn(toggle_mic) end,
+              {description = "", group="awesome"}),
+    awful.key({}, "XF86MonBrightnessDown",
+              function() awful.util.spawn(backlight_decrease) end,
+              {description = "", group="awesome"}),
+    awful.key({}, "XF86MonBrightnessUp",
+              function() awful.util.spawn(backlight_increase) end,
+              {description = "", group="awesome"})
 )
 
 clientkeys = gears.table.join(
@@ -593,48 +627,6 @@ client.connect_signal("manage", function (c)
         -- Prevent clients from being unreachable after screen count changes.
         awful.placement.no_offscreen(c)
     end
-end)
-
--- Add a titlebar if titlebars_enabled is set to true in the rules.
-client.connect_signal("request::titlebars", function(c)
-    -- buttons for the titlebar
-    local buttons = gears.table.join(
-        awful.button({ }, 1, function()
-            client.focus = c
-            c:raise()
-            awful.mouse.client.move(c)
-        end),
-        awful.button({ }, 3, function()
-            client.focus = c
-            c:raise()
-            awful.mouse.client.resize(c)
-        end)
-    )
-
-    awful.titlebar(c) : setup {
-        { -- Left
-            awful.titlebar.widget.iconwidget(c),
-            buttons = buttons,
-            layout  = wibox.layout.fixed.horizontal
-        },
-        { -- Middle
-            { -- Title
-                align  = "center",
-                widget = awful.titlebar.widget.titlewidget(c)
-            },
-            buttons = buttons,
-            layout  = wibox.layout.flex.horizontal
-        },
-        { -- Right
-            awful.titlebar.widget.floatingbutton (c),
-            awful.titlebar.widget.maximizedbutton(c),
-            awful.titlebar.widget.stickybutton   (c),
-            awful.titlebar.widget.ontopbutton    (c),
-            awful.titlebar.widget.closebutton    (c),
-            layout = wibox.layout.fixed.horizontal()
-        },
-        layout = wibox.layout.align.horizontal
-    }
 end)
 
 -- Enable sloppy focus, so that focus follows mouse.
