@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -xe
+set -e
 
 install_config () {
   local application_conf="$1"; shift
@@ -28,6 +28,9 @@ main () {
 
   # Alacritty Configurations.
   install_config "alacritty" "${repo_path}" "${HOME}/.config"
+
+  # Sway Configurations.
+  install_config "sway" "${repo_path}" "${HOME}/.config"
 
   # WayBar Configurations.
   install_config "waybar" "${repo_path}" "${HOME}/.config"
