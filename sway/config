@@ -54,7 +54,7 @@ input "1739:52710:DLL096D:01_06CB:CDE6_Touchpad" {
     tap_button_map lrm
 }
 
-input "type:keyboard" {
+input "1:1:AT_Translated_Set_2_keyboard" {
     xkb_layout us,se,it
     xkb_variant ,nodeadkeys
 }
@@ -80,6 +80,12 @@ input "type:keyboard" {
 
     # Start your launcher
     bindsym $mod+space exec $menu
+
+    # Switch keyboard layout
+    bindsym $alt+Ctrl+Space \
+        input '1:1:AT_Translated_Set_2_keyboard' xkb_switch_layout prev
+    bindsym Ctrl+Space \
+        input '1:1:AT_Translated_Set_2_keyboard' xkb_switch_layout next
 
     # Drag floating windows by holding down $mod and left mouse button.
     # Resize them with right mouse button + $mod.
