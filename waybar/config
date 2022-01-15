@@ -26,7 +26,7 @@
         "format-alt": "{:%Y-%m-%d}"
     },
     "cpu": {
-        "format": " {usage}%",
+        "format": " {usage}%",
         "tooltip": false
     },
     "memory": {
@@ -42,7 +42,7 @@
             "critical": 10
         },
         "format": "{icon} {capacity}%",
-        "format-charging": "{icon} {capacity}%",
+        "format-charging": "{icon} {capacity}%",
         "format-plugged": "{icon}ﮣ {capacity}%",
         "format-alt": "{icon} {time}",
         "format-icons": ["", "", "", "", "", "", "", "", "", ""]
