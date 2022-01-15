@@ -35,7 +35,9 @@ output * bg $bgimage fill
 ### Idle configuration
 #
 set $lockimage $homedir/.config/sway/wp/worlds_wp_blurred_1920x1200.jpg
-set $swaylock_cmd 'swaylock -e -f -i $lockimage'
+set $swaylock_cmd '/usr/bin/swaylock -e -f -i $lockimage'
+set $suspend_cmd '/usr/bin/systemctl suspend'
+set $hibernate_cmd '/usr/bin/systemctl hibernate'
 exec swayidle -w \
     timeout 300 $swaylock_cmd \
     timeout 600 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
@@ -65,10 +67,16 @@ input "type:keyboard" {
     bindsym $mod+Return exec $term
 
     # Lock the screen
-    bindsym $mod+Alt+l exec $swaylock_cmd
+    bindsym $mod+Ctrl+q exec $swaylock_cmd
+
+    # Suspend
+    bindsym $mod+$alt+q exec $suspend_cmd
+
+    # Hibernate
+    bindsym $mod+Shift+q exec $hibernate_cmd
 
     # Kill focused window
-    bindsym $mod+Shift+q kill
+    bindsym $mod+Ctrl+k kill
 
     # Start your launcher
     bindsym $mod+space exec $menu
