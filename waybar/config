@@ -5,7 +5,7 @@
     // "width": 1280, // Waybar width
     "spacing": 4, // Gaps between modules (4px)
     // Choose the order of the modules
-    "modules-left": ["sway/workspaces", "sway/mode", "custom/media"],
+    "modules-left": ["sway/workspaces", "sway/mode"],
     "modules-center": ["sway/window"],
     "modules-right": ["pulseaudio", "network", "cpu", "memory", "backlight", "keyboard-state", "battery", "clock", "sway/language"],
     "keyboard-state": {
@@ -30,7 +30,7 @@
         "tooltip": false
     },
     "memory": {
-        "format": " {}%"
+        "format": " {}%"
     },
     "backlight": {
         "format": "{icon} {percent}%",
@@ -43,16 +43,17 @@
         },
         "format": "{icon} {capacity}%",
         "format-charging": "{icon} {capacity}%",
-        "format-plugged": "{icon} {capacity}%",
+        "format-plugged": "{icon}ﮣ {capacity}%",
         "format-alt": "{icon} {time}",
         "format-icons": ["", "", "", "", "", "", "", "", "", ""]
     },
     "network": {
-        "format-wifi": " {signalStrength}% - {essid}",
+        //"format-wifi": " {signalStrength}% - {essid}",
+        "format-wifi": " {signalStrength}%",
         "format-ethernet": " {ipaddr}/{cidr}",
         "tooltip-format": " {ifname} via {gwaddr}",
         "format-linked": " {ifname}",
-        "format-disconnected": " Disconnected",
+        "format-disconnected": "",
         "format-alt": "{ifname}: {ipaddr}/{cidr}"
     },
     "pulseaudio": {

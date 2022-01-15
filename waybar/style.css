@@ -1,9 +1,9 @@
 * {
     /* `otf-font-awesome` is required to be installed for icons */
     font-family: Symbols Nerd Font, Noto Sans;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: bold;
-    padding: 0 7px;
+    padding: 0 0px;
 }
 
 window#waybar {
@@ -26,6 +26,7 @@ window#waybar.hidden {
     /* Avoid rounded borders under each workspace name */
     border: none;
     border-radius: 0;
+    padding: 0 10px;
 }
 
 /* https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect */
@@ -76,16 +77,19 @@ window#waybar.hidden {
 #clock {
     background-color: transparent;
     color: #ffffff;
+    padding: 0 10px;
 }
 
 #battery {
     background-color: transparent;
     color: #ffffff;
+    padding: 0 10px;
 }
 
 #battery.charging, #battery.plugged {
     background-color: #26A65B;
     color: #ffffff;
+    padding: 0 10px;
 }
 
 @keyframes blink {
@@ -103,6 +107,7 @@ window#waybar.hidden {
     animation-timing-function: linear;
     animation-iteration-count: infinite;
     animation-direction: alternate;
+    padding: 0 10px;
 }
 
 label:focus {
@@ -112,36 +117,43 @@ label:focus {
 #cpu {
     background-color: transparent;
     color: #ffffff;
+    padding: 0 10px;
 }
 
 #memory {
     background-color: transparent;
     color: #ffffff;
+    padding: 0 10px;
 }
 
 #backlight {
     background-color: transparent;
     color: #ffffff;
+    padding: 0 10px;
 }
 
 #network {
     background-color: transparent;
     color: #ffffff;
+    padding: 0 10px;
 }
 
 #network.disconnected {
     background-color: transparent;
     color: #ffc9c9;
+    padding: 0 10px;
 }
 
 #pulseaudio {
     background-color: transparent;
     color: #ffffff;
+    padding: 0 10px;
 }
 
 #temperature {
     background-color: transparent;
     color: #000000;
+    padding: 0 10px;
 }
 
 #temperature.critical {
@@ -152,6 +164,7 @@ label:focus {
     animation-timing-function: linear;
     animation-iteration-count: infinite;
     animation-direction: alternate;
+    padding: 0 10px;
 }
 
 #language {
@@ -160,6 +173,7 @@ label:focus {
     padding: 0 5px;
     margin: 0 5px;
     min-width: 16px;
+    padding: 0 10px;
 }
 
 #keyboard-state {
@@ -168,6 +182,7 @@ label:focus {
     padding: 0 0px;
     margin: 0 5px;
     min-width: 16px;
+    padding: 0 10px;
 }
 
 #keyboard-state > label {
