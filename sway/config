@@ -4,6 +4,8 @@ set $homedir /home/armax
 
 set $mod Mod4
 set $alt Mod1
+set $fn_f6 XF86MonBrightnessDown
+set $fn_f7 XF86MonBrightnessUp
 
 # Home row direction keys (VIM-like).
 set $left h
@@ -86,6 +88,10 @@ input "1:1:AT_Translated_Set_2_keyboard" {
         input '1:1:AT_Translated_Set_2_keyboard' xkb_switch_layout prev
     bindsym Ctrl+Space \
         input '1:1:AT_Translated_Set_2_keyboard' xkb_switch_layout next
+
+    # Brightness
+    bindsym $fn_f6 exec '/usr/bin/brightnessctl set 5%-'
+    bindsym $fn_f7 exec '/usr/bin/brightnessctl set +5%'
 
     # Drag floating windows by holding down $mod and left mouse button.
     # Resize them with right mouse button + $mod.
