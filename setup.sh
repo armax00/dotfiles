@@ -34,6 +34,9 @@ main () {
 
   # WayBar Configurations.
   install_config "waybar" "${repo_path}" "${HOME}/.config"
+
+  # NeoVim Configurations
+  install_config "nvim" "${repo_path}" "${HOME}/.config"
 }
 
 if [[ -n $BASH_SOURCE ]]
