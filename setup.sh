@@ -15,6 +15,42 @@ install_config () {
   fi
 }
 
+install_system_dependency () {
+  local package="$1"; shift
+
+  # TODO
+}
+
+install_nvim_dependency () {
+  local package="$1"; shift
+  local repository="$1"; shift
+
+  local pack_dir="${HOME}/.local/share/nvim/site/pack"
+  local packages_dir="${pack_dir}/packages"
+
+  if [[ ! -d "$pack_dir" ]]
+  then
+    mkdir -p "$pack_dir"
+  fi
+
+  if [[ ! -d "$packages_dir" ]]
+  then
+    mkdir -p "$packages_dir"
+    (
+      cd "$packages_dir"
+      git init
+    )
+  fi
+
+  (
+    cd "$packages_dir"
+    git submodule add "$repository" "$package"
+  )
+
+  mkdir -p "$pack_dir/$package/start"
+  ln -s "$packages_dir/$package" "$pack_dir/$package/start/$package"
+}
+
 main () {
   local script_path=$(realpath $BASH_SOURCE)
   local repo_path=$(dirname $script_path)
@@ -37,7 +73,29 @@ main () {
 
   # NeoVim Configurations
   install_config "nvim" "${repo_path}" "${HOME}/.config"
+  install_nvim_dependency \
+      "fzf-lua" \
+      "https://github.com/ibhagwan/fzf-lua.git"
+  install_nvim_dependency \
+      "lualine" \
+      "https://github.com/nvim-lualine/lualine.nvim.git"
+  install_nvim_dependency \
+      "nightfox" \
+      "https://github.com/EdenEast/nightfox.nvim.git"
+  install_nvim_dependency \
+      "nvim-fzf" \
+      "ttps://github.com/vijaymarupudi/nvim-fzf.git"
+  install_nvim_dependency \
+      "nvim-lspconfig" \
+      "https://github.com/neovim/nvim-lspconfig.git"
+  install_nvim_dependency \
+      "nvim-tree" \
+      "https://github.com/kyazdani42/nvim-tree.lua.git"
+  install_nvim_dependency \
+      "nvim-web-devicons" \
+      "https://github.com/kyazdani42/nvim-web-devicons.git"
 }
+
 
 if [[ -n $BASH_SOURCE ]]
 then
