@@ -58,6 +58,12 @@ install_nvim_dependency () {
   ln -s "$packages_dir/$package" "$pack_dir/$package/start/$package"
 }
 
+install_bin_dir () {
+  local repo_path="$1"; shift
+
+  ln -s "${repo_path}/bin" "${HOME}/bin"
+}
+
 setup_neovim () {
   install_config "nvim" "${repo_path}" "${HOME}/.config"
   install_nvim_dependency \
@@ -105,6 +111,8 @@ main () {
 
   # NeoVim Configurations
   setup_neovim
+
+  install_bin_dir "${repo_path}"
 }
 
 
