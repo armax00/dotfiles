@@ -78,7 +78,7 @@ input "1:1:AT_Translated_Set_2_keyboard" {
     bindsym $mod+Shift+q exec $hibernate_cmd
 
     # Kill focused window
-    bindsym $mod+Ctrl+k kill
+    bindsym $mod+Ctrl+c kill
 
     # Start your launcher
     bindsym $mod+space exec $menu
