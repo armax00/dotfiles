@@ -87,6 +87,12 @@ setup_neovim () {
   install_nvim_dependency \
       "nvim-web-devicons" \
       "https://github.com/kyazdani42/nvim-web-devicons.git"
+  install_nvim_dependency \
+      "nvim-plenary" \
+      "https://github.com/nvim-lua/plenary.nvim.git"
+  install_nvim_dependency \
+      "nvim-telescope" \
+      "https://github.com/nvim-telescope/telescope.nvim.git"
 }
 
 main () {
