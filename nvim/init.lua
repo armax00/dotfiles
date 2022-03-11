@@ -1,3 +1,2 @@
-require("general")
-require("plugins")
-require("lsp")
+require("common/init")
+require("private/init")
