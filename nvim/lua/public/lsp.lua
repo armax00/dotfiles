@@ -5,12 +5,12 @@ local servers = {
     pyright = {},
     sumneko_lua = {
       settings = {
-            Lua = {
-                diagnostics = {
-                    globals = { 'vim' }
-                }
-            }
+        Lua = {
+          diagnostics = {
+            globals = { "vim" }
+          }
         }
+      }
     },
     bashls = {},
 }

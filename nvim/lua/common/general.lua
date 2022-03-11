@@ -9,3 +9,4 @@ vim.opt.number = true
 
 -- Programming.
 vim.opt.colorcolumn = "81"
+vim.opt.textwidth = 80
