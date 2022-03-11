@@ -61,7 +61,10 @@ install_nvim_dependency () {
 install_bin_dir () {
   local repo_path="$1"; shift
 
-  ln -s "${repo_path}/bin" "${HOME}/bin"
+  if [[ ! -h "${HOME}/bin" ]]
+  then
+    ln -s "${repo_path}/bin" "${HOME}/bin"
+  fi
 }
 
 setup_neovim () {
