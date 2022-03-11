@@ -32,35 +32,19 @@ local on_attach = function(_, bufnr)
   buf_set_keymap("n", "<space>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
 end
 
--- Use a loop to conveniently call 'setup' on multiple servers and
--- map buffer local keybindings when the language server attaches
-local servers = {
-    clangd = { "--enable-config" },
-    pyright = {},
-    sumneko_lua = {
-				settings = {
-						Lua = {
-								diagnostics = {
-										globals = { 'vim' }
-								}
-						}
-				}
-    },
-    bashls = {},
+Lsp = {
+  register_server = function (server, custom_settings)
+    local settings = {
+        on_attach = on_attach,
+        flags = {
+            debounce_text_changes = 150,
+        }
+    }
+
+    for key, value in ipairs(custom_settings) do
+      settings[key] = value
+    end
+
+    nvim_lsp[server].setup(settings)
+  end
 }
-
-for server, server_settings in pairs(servers) do
-	local settings = {
-      on_attach = on_attach,
-      flags = {
-          debounce_text_changes = 150,
-      }
-  }
-
-	for key, value in pairs(server_settings) do
-		settings[key] = value
-	end
-
-  nvim_lsp[server].setup(settings)
-end
-
