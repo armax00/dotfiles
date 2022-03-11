@@ -3,6 +3,7 @@ require("common/lsp")
 local servers = {
     clangd = { "--enable-config" },
     pyright = {},
+    bashls = {},
     sumneko_lua = {
       settings = {
         Lua = {
@@ -12,7 +13,6 @@ local servers = {
         }
       }
     },
-    bashls = {},
 }
 
 for server, settings in pairs(servers) do

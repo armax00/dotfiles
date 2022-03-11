@@ -41,7 +41,7 @@ Lsp = {
         }
     }
 
-    for key, value in ipairs(custom_settings) do
+    for key, value in pairs(custom_settings) do
       settings[key] = value
     end
 
