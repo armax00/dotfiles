@@ -7,3 +7,5 @@ vim.opt.expandtab = true
 -- File numbering.
 vim.opt.number = true
 
+-- Programming.
+vim.opt.colorcolumn = "81"
