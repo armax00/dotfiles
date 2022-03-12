@@ -1,17 +1,17 @@
 #!/usr/bin/env bash
-#set -e
+set -e
 
 install_config () {
   local application_conf="$1"; shift
   local repo_path="$1"; shift
   local dst_path="$1"; shift
 
-  if [[ ! -h "$dst_path/$application_conf" ]]
+  if [[ ! -h "${dst_path:?}/${application_conf:?}" ]]
   then
-    echo "Creating $dst_path/$application_conf"
-    rm -fr "$dst_path/$application_conf"
-    ln -s "$repo_path/$application_conf" \
-        "$dst_path/$application_conf"
+    echo "Creating ${dst_path:?}/${application_conf:?}"
+    rm -fr "${dst_path:?}/${application_conf:?}"
+    ln -s "${repo_path:?}/${application_conf:?}" \
+        "${dst_path:?}/${application_conf:?}"
   fi
 }
 
@@ -25,8 +25,8 @@ install_nvim_dependency () {
   local package="$1"; shift
   local repository="$1"; shift
 
-  local pack_dir="${HOME}/.local/share/nvim/site/pack"
-  local packages_dir="${pack_dir}/packages"
+  local pack_dir="${HOME:?}/.local/share/nvim/site/pack"
+  local packages_dir="${pack_dir:?}/packages"
   local 
 
   if [[ -d "$packages_dir/$package" ]]
@@ -59,7 +59,9 @@ install_nvim_dependency () {
 }
 
 install_bin_dir () {
-  local repo_path="$1"; shift
+  local repo_path
+ 
+  repo_path="$1"
 
   if [[ ! -h "${HOME}/bin" ]]
   then
@@ -99,24 +101,27 @@ setup_neovim () {
 }
 
 main () {
-  local script_path=$(realpath $BASH_SOURCE)
-  local repo_path=$(dirname $script_path)
+  local script_path
+  local repo_path
+
+  script_path=$(realpath "${BASH_SOURCE[0]}")
+  repo_path=$(dirname "${script_path}")
 
   # Git Configurations.
   install_config ".gitconfig" "${repo_path}" "${HOME}"
   # If the local file does not exist, it will be created.
   # It will be poplulated separately with the more
   # sensitive content.
-  touch ${HOME}/.gitconfig.local
+  touch "${HOME:?}/.gitconfig.local"
 
   # Alacritty Configurations.
-  install_config "alacritty" "${repo_path}" "${HOME}/.config"
+  install_config "alacritty" "${repo_path}" "${HOME:?}/.config"
 
   # Sway Configurations.
-  install_config "sway" "${repo_path}" "${HOME}/.config"
+  install_config "sway" "${repo_path}" "${HOME:?}/.config"
 
   # WayBar Configurations.
-  install_config "waybar" "${repo_path}" "${HOME}/.config"
+  install_config "waybar" "${repo_path}" "${HOME:?}/.config"
 
   # NeoVim Configurations
   setup_neovim
@@ -125,7 +130,7 @@ main () {
 }
 
 
-if [[ -n $BASH_SOURCE ]]
+if [[ -n ${BASH_SOURCE[0]} ]]
 then
   main "$@"
 fi
