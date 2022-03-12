@@ -59,9 +59,7 @@ install_nvim_dependency () {
 }
 
 install_bin_dir () {
-  local repo_path
- 
-  repo_path="$1"
+  local repo_path="$1"; shift
 
   if [[ ! -h "${HOME}/bin" ]]
   then
