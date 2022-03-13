@@ -98,6 +98,55 @@ setup_neovim () {
       "https://github.com/nvim-telescope/telescope.nvim.git"
 }
 
+INSTALL_GIT_CONFIGS=false
+INSTALL_NEOVIM_CONFIGS=false
+INSTALL_ALACRITTY_CONFIGS=false
+INSTALL_SWAY_CONFIGS=false
+INSTALL_NEOVIM_CONFIGS=false
+INSTALL_BINS=false
+
+parse_args () {
+  while [[ $# -gt 0 ]]
+  do
+    param="$1"; shift
+
+    case "$param" in
+      --git)
+        INSTALL_GIT_CONFIGS=true
+        break
+        ;;
+      --nvim)
+        INSTALL_NEOVIM_CONFIGS=true
+        break
+        ;;
+      --alacritty)
+        INSTALL_ALACRITTY_CONFIGS=true
+        break
+        ;;
+      --sway)
+        INSTALL_SWAY_CONFIGS=true
+        break
+        ;;
+      --bins)
+        INSTALL_BINS=true
+        break
+        ;;
+      --all)
+        INSTALL_GIT_CONFIGS=true
+        INSTALL_NEOVIM_CONFIGS=true
+        INSTALL_ALACRITTY_CONFIGS=true
+        INSTALL_SWAY_CONFIGS=true
+        INSTALL_NEOVIM_CONFIGS=true
+        INSTALL_BINS=true
+        break
+        ;;
+      default)
+        echo "ERROR: Unrecognised parameter $param"
+        exit 1
+    esac
+  done
+}
+
 main () {
   local script_path
   local repo_path
@@ -105,26 +154,41 @@ main () {
   script_path=$(realpath "${BASH_SOURCE[0]}")
   repo_path=$(dirname "${script_path}")
 
+  parse_args "$@"
+
   # Git Configurations.
-  install_config ".gitconfig" "${repo_path}" "${HOME}"
-  # If the local file does not exist, it will be created.
-  # It will be poplulated separately with the more
-  # sensitive content.
-  touch "${HOME:?}/.gitconfig.local"
+  if $INSTALL_GIT_CONFIGS
+  then
+    install_config ".gitconfig" "${repo_path}" "${HOME}"
+    # If the local file does not exist, it will be created.
+    # It will be poplulated separately with the more
+    # sensitive content.
+    touch "${HOME:?}/.gitconfig.local"
+  fi
 
   # Alacritty Configurations.
-  install_config "alacritty" "${repo_path}" "${HOME:?}/.config"
+  if $INSTALL_ALACRITTY_CONFIGS
+  then
+    install_config "alacritty" "${repo_path}" "${HOME:?}/.config"
+  fi
 
   # Sway Configurations.
-  install_config "sway" "${repo_path}" "${HOME:?}/.config"
-
-  # WayBar Configurations.
-  install_config "waybar" "${repo_path}" "${HOME:?}/.config"
+  if $INSTALL_SWAY_CONFIGS
+  then
+    install_config "sway" "${repo_path}" "${HOME:?}/.config"
+    install_config "waybar" "${repo_path}" "${HOME:?}/.config"
+  fi
 
   # NeoVim Configurations
-  setup_neovim
+  if $INSTALL_NEOVIM_CONFIGS
+  then
+    setup_neovim
+  fi
 
-  install_bin_dir "${repo_path}"
+  if $INSTALL_BINS
+  then
+    install_bin_dir "${repo_path}"
+  fi
 }
 
 
