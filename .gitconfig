@@ -6,7 +6,7 @@
 	unstage = reset HEAD --
 	last = log -1 HEAD
 [core]
-	editor = /home/armax/bin/vim
+	editor = $HOME/bin/vim
 [merge]
 	tool = vimdiff
 	conflictstyle = diff3
