@@ -5,7 +5,7 @@ local home_dir = os.getenv("HOME")
 local modules = {
   "common/init",
   "public/init",
-  "work/init"
+  "private/init"
 }
 
 for _, module in ipairs(modules) do
