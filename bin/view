@@ -1,2 +1,1 @@
-#!/bin/bash
-/usr/bin/nvim -R "$@"
+/usr/local/google/home/armax/bin/nvim

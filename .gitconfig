@@ -8,7 +8,7 @@
 [core]
 	editor = $HOME/bin/vim
 [merge]
-	tool = vimdiff
+	tool = /usr/local/google/home/armax/bin/vimdiff
 	conflictstyle = diff3
 [mergetool]
 	prompt = false

@@ -8,22 +8,35 @@ vim.api.nvim_set_keymap('n', '<c-P>',
     { noremap = true, silent = true })
 
 -- NVim Tree
-require"nvim-tree".setup()
-vim.api.nvim_set_keymap("n", "<leader>n", ":NvimTreeToggle<CR>", {})
+--require"nvim-tree".setup()
+--vim.api.nvim_set_keymap("n", "<leader>n", ":NvimTreeToggle<CR>", {})
 
 -- Lua Line.
-local lualine = require"lualine"
+local lualine = require("lualine")
 lualine.setup({options = { theme = "nightfox", }})
 
 -- Color scheme
 local nightfox = require("nightfox")
 nightfox.setup({
-    fox = "nightfox",
+  options = {
     transparent = true,
+    true_colors = true,
+  }
 })
-nightfox.load()
 
 -- Telescope
+local telescope = require("telescope")
+local telescope_actions = require("telescope.actions")
+
+telescope.setup({
+  defaults = {
+    i = {
+      ["<C-Down>"] = telescope_actions.cycle_history_next,
+      ["<C-Up>"] = telescope_actions.cycle_history_prev,
+    },
+  }
+})
+
 local function telescope_keymap(keys, cmd)
   vim.api.nvim_set_keymap("n", keys, cmd, {noremap=true, silent=true})
 end
