@@ -69,33 +69,33 @@ install_bin_dir () {
 
 setup_neovim () {
   install_config "nvim" "${repo_path}" "${HOME}/.config"
-  install_nvim_dependency \
-      "fzf-lua" \
-      "https://github.com/ibhagwan/fzf-lua.git"
-  install_nvim_dependency \
-      "lualine" \
-      "https://github.com/nvim-lualine/lualine.nvim.git"
-  install_nvim_dependency \
-      "nightfox" \
-      "https://github.com/EdenEast/nightfox.nvim.git"
-  install_nvim_dependency \
-      "nvim-fzf" \
-      "https://github.com/vijaymarupudi/nvim-fzf.git"
-  install_nvim_dependency \
-      "nvim-lspconfig" \
-      "https://github.com/neovim/nvim-lspconfig.git"
-  install_nvim_dependency \
-      "nvim-tree" \
-      "https://github.com/kyazdani42/nvim-tree.lua.git"
-  install_nvim_dependency \
-      "nvim-web-devicons" \
-      "https://github.com/kyazdani42/nvim-web-devicons.git"
-  install_nvim_dependency \
-      "nvim-plenary" \
-      "https://github.com/nvim-lua/plenary.nvim.git"
-  install_nvim_dependency \
-      "nvim-telescope" \
-      "https://github.com/nvim-telescope/telescope.nvim.git"
+#  install_nvim_dependency \
+#      "fzf-lua" \
+#      "https://github.com/ibhagwan/fzf-lua.git"
+#  install_nvim_dependency \
+#      "lualine" \
+#      "https://github.com/nvim-lualine/lualine.nvim.git"
+#  install_nvim_dependency \
+#      "nightfox" \
+#      "https://github.com/EdenEast/nightfox.nvim.git"
+#  install_nvim_dependency \
+#      "nvim-fzf" \
+#      "https://github.com/vijaymarupudi/nvim-fzf.git"
+#  install_nvim_dependency \
+#      "nvim-lspconfig" \
+#      "https://github.com/neovim/nvim-lspconfig.git"
+#  install_nvim_dependency \
+#      "nvim-tree" \
+#      "https://github.com/kyazdani42/nvim-tree.lua.git"
+#  install_nvim_dependency \
+#      "nvim-web-devicons" \
+#      "https://github.com/kyazdani42/nvim-web-devicons.git"
+#  install_nvim_dependency \
+#      "nvim-plenary" \
+#      "https://github.com/nvim-lua/plenary.nvim.git"
+#  install_nvim_dependency \
+#      "nvim-telescope" \
+#      "https://github.com/nvim-telescope/telescope.nvim.git"
 }
 
 INSTALL_GIT_CONFIGS=false

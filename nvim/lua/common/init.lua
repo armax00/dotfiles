@@ -7,7 +7,6 @@ require('common/plugins_setup')
 require('common/key_mapping')
 
 -- [[ Setting options ]]
-
 vim.o.hlsearch = true
 vim.o.termguicolors = true
 vim.o.colorcolumn = "81,101"

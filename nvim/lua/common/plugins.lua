@@ -128,4 +128,9 @@ require('lazy').setup({
     },
     build = ':TSUpdate',
   },
+
+  {
+    'ThePrimeagen/vim-be-good',
+    dependencies = {},
+  },
 }, {})
