@@ -4,7 +4,7 @@ vim.g.maplocalleader = ' '
 
 require('common/plugins')
 require('common/plugins_setup')
-require('common/key_mapping')
+require('common/mappings')
 
 -- [[ Setting options ]]
 vim.o.hlsearch = true

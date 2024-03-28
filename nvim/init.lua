@@ -1,12 +1,5 @@
-local modules = {
-  "common/init",
-  "public/init",
-  "private/init"
-}
+require("common/utils")
 
-for _, module in ipairs(modules) do
-  local filepath = vim.fn.stdpath('config') .. "/lua/" .. module .. ".lua"
-  if vim.loop.fs_stat(filepath) then
-    require(module)
-  end
-end
+require("common/init")
+require_if("public/init")
+require_if("private/init")
