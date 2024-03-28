@@ -1,3 +1,6 @@
+require_if("public/plugins_setup")
+require_if("private/plugins_setup")
+
 -- [[ Nightfox setup ]]
 require('ibl').setup({})
 
